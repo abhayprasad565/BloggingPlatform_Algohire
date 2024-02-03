@@ -7,14 +7,14 @@ async function fetchData(url, params, setError) {
         if (!res.ok) {
             const data = await res.json();
             console.log(data);
-            setError(<ErrorPopup error={true} message={data.message} />);
+            setError(<ErrorPopup error={true} message={res.message} />);
         } else {
             return await res.json();
         }
     } catch (error) {
         // Handle network errors or other exceptions
         console.error('Error:', error.message);
-        setError(<ErrorPopup error={true} message={data.message} />);
+        setError(<ErrorPopup error={true} message={res.message} />);
         setTimeout(() => { setError(null) }, 2000);
     } finally {
         // Always remove the error after handling it

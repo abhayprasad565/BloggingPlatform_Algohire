@@ -1,9 +1,10 @@
 import React from 'react';
 import fetchData from '../Hooks/apiCall';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import user from '../Store/userInfo';
 import errorPopup from '../Store/errorPopup';
+import { useSetRecoilState } from 'recoil';
 
 function PostsCard({ post, owner }) {
     //console.log(post)
@@ -79,7 +80,6 @@ function PostsCard({ post, owner }) {
                     </Link>
                 </div>
             </div>
-            {errorPopup}
         </article>
     )
 }

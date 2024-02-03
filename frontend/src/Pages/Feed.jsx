@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import FeedPostsCard from '../Components/FeedPostsCard';
 
 const Feed = () => {
-    const category = useParams();
+    const { category } = useParams();
     const [posts, setPosts] = useState();
     const [trending, setTrending] = useState([]);
     const setError = useSetRecoilState(errorPopup);
@@ -22,25 +22,26 @@ const Feed = () => {
                     'token': localStorage.getItem('token'),
                 }
             }
-            const res = await fetchData(`/post${category ? `?category=${category}` : "/"}`, params, setError);
+            const res = await fetchData(`/post/${category ? `/${category}` : "/"}`, params, setError);
             if (res) {
                 // set profile owner
-                setPosts(res.post);
+                setPosts(res.posts);
+                console.log(category);
                 setTrending(res.trending);
             }
             else navigate("/login", { replace: true });
         }
         fetchFeed();
         console.log("feed");
-    }, [])
+    }, [category])
 
     return (
         <>
             <TrendingNavbar trending={trending} />
             <div className='sm:text-xl  font-bold p-2 '>Trending Posts</div>
-            {posts && posts.map((post) => {
+            <div className='w-full items-center justify-center flex sm:flex-row flex-wrap  flex-col'> {posts && posts.map((post) => {
                 return <FeedPostsCard key={post._id} post={post} />
-            })}
+            })}</div>
         </>
     );
 }

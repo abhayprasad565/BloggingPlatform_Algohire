@@ -5,9 +5,9 @@ const PostsCard = ({ post }) => {
 
     let { createdAt = "", title = 0, content = "", _id = 0, author = 0, category = 0 } = post;
     return (
-        <div className="box-border animate-fade-up animate-once  sm:w-[40%] w-full mx-3 my-3  overflow-hidden rounded-lg bg-white shadow">
+        <div className="box-border animate-fade-up animate-once  sm:w-[450px] w-full mx-3 my-3  overflow-hidden rounded-lg bg-white shadow">
             <img
-                src={images[0].trim() || ""}
+                src={"https://images.unsplash.com/photo-1614899099690-3bd319d25f99?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
                 className="aspect-video w-full object-cover "
                 alt=""
             />

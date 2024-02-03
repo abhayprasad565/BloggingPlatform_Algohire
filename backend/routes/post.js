@@ -19,19 +19,30 @@ const findTrendingPosts = async () => {
 // get all posts
 router.get("/:category", async (req, res, next) => {
     try {
-        // search based on categry filter
-        const query = {};
+        let query = {};
+        console.log(req.params)
         const { category } = req.params;
-        if (category) query = { ...query, category: category };
         // get all posts and populate authors and sort according to the time created 
-        const allPosts = await Post.find(query).populate('author', 'firstName lastName username',).sort({ createdAt: 1 });
+        //console.log(query);
+        const allPosts = await Post.find({ category: category }).populate('author', 'firstName lastName username',).sort({ createdAt: 1 }).limit(25);
         const trending = await findTrendingPosts();
-        return res.json({ posts: allPosts, tranding: trending });
+        return res.json({ posts: allPosts, trending: trending });
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+})
+router.get("/", async (req, res, next) => {
+    try {
+        const allPosts = await Post.find({}).populate('author', 'firstName lastName username',).sort({ createdAt: 1 }).limit(25);
+        const trending = await findTrendingPosts();
+        return res.json({ posts: allPosts, trending: trending });
     } catch (error) {
         console.log(error.message);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 });
+
 // add new post
 router.post("/", async (req, res) => {
     try {

@@ -4,20 +4,21 @@ import user from '../Store/userInfo'
 import { useParams } from 'react-router-dom';
 import PostsCard from '../Components/PostsCard';
 import errorPopup from '../Store/errorPopup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 const UserProfile = () => {
-    const username = useParams();
+    const { username } = useParams();
+    console.log(username);
     const [isOwner, setIsOwner] = useState(false);
     const userInfo = useRecoilValue(user);
-    useEffect(() => setIsOwner(username == userInfo.username), [userInfo]);
+    useEffect(() => setIsOwner(userInfo && username == userInfo.username), [userInfo]);
     return (
         <>
             <div className='h-fit md:h-[80vh] box-border p-2 flex flex-col md:flex-row items-start  w-screen bg-custom-background text-custom-textColor'>
                 <div className="relative w-full sm:w-1/3 sm:min-h-[80vh] mt-16 min-w-0 break-words  mb-6 shadow-lg rounded-xl">
                     {isOwner &&
-                        <span class="inline-flex w-fit ms-[80%] justify-end items-end -space-x-px overflow-hidden rounded-md border bg-white shadow-sm">
+                        <span className="inline-flex w-fit ms-[80%] justify-end items-end -space-x-px overflow-hidden rounded-md border bg-white shadow-sm">
                             <Link to={`/users/edit/${username}`}
-                                class="inline-block border px-4 py-1 sm:py-2 text-sm font-medium text-custom-textColor hover:bg-custom-linkHover focus:relative"
+                                className="inline-block border px-4 py-1 sm:py-2 text-sm font-medium text-custom-textColor hover:bg-custom-linkHover focus:relative"
                             >
                                 Edit
                             </Link>

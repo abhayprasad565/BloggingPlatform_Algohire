@@ -9,7 +9,7 @@ const isLoggedInMiddileware = (req, res, next) => {
         //console.log(verify)
         // if verified pass on to next
         if (verify) {
-            console.log(verify);
+            //console.log(verify);
             req.userId = verify.userId;
             req.username = verify.username;
         }
