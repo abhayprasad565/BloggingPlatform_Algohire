@@ -4,12 +4,15 @@ import logo from '../assets/logo.jpg';
 import Button from './Button';
 import user from '../Store/userInfo';
 import { useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router-dom'
 const Navbar = () => {
     const userInfo = useRecoilValue(user);
-
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-black transition ease transform duration-300`;
     const handleLogin = () => {
+        localStorage.setItem('token', null);
+        navigate('/login', { replace: true });
 
     }
     return (

@@ -6,13 +6,16 @@ import { Link } from 'react-router-dom';
 import errorPopup from '../Store/errorPopup'
 import { useSetRecoilState } from 'recoil'
 import fetchData from '../Hooks/apiCall';
+import { useNavigate } from 'react-router-dom'
 const Signup = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const setError = useSetRecoilState(errorPopup);
+    const navigate = useNavigate();
     const handleSignin = async () => {
+        localStorage.setItem('token', null);
         let params = {
             method: "POST",
             headers: {
@@ -28,7 +31,8 @@ const Signup = () => {
             })
         }
         const res = await fetchData('/account/signup', params, setError);
-        if (res != null) {
+        if (res) {
+            console.log(res);
             navigate('/login', { replace: true });
         };
     }

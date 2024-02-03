@@ -13,7 +13,7 @@ async function fetchData(url, params, setError) {
         }
     } catch (error) {
         // Handle network errors or other exceptions
-        console.error('Error:', error.message);
+        console.error('Error:', res.message);
         setError(<ErrorPopup error={true} message={res.message} />);
         setTimeout(() => { setError(null) }, 2000);
     } finally {
