@@ -27,7 +27,8 @@ app.use('/post', isLoggedInMiddileware, postRoute);
 
 
 // 404 page
-app.use("", (req, res) => {
+app.use("*", (req, res) => {
+    console.log(req.path);
     return res.status(404).json({ message: "Page not Found" });
 })
 // default error handler

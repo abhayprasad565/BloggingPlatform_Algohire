@@ -8,7 +8,7 @@ const { validatePost } = require("../Middilewares.js/schemaAuth");
 // returns trending category in pas 15 days
 const findTrendingPosts = async () => {
     const tenDaysAgoTimestamp = Date.now() - (15 * 24 * 60 * 60 * 1000);
-    const trending = await Posts.aggregate([
+    const trending = await Post.aggregate([
         { $match: { createdAt: { $gte: new Date(tenDaysAgoTimestamp) } } },
         { $group: { _id: "$category" } },
         { $limit: 5 }
@@ -24,9 +24,9 @@ router.get("/:category", async (req, res, next) => {
         const { category } = req.params;
         if (category) query = { ...query, category: category };
         // get all posts and populate authors and sort according to the time created 
-        const allPosts = await Posts.find(query).populate('author', 'firstName lastName username',).sort({ createdAt: 1 });
+        const allPosts = await Post.find(query).populate('author', 'firstName lastName username',).sort({ createdAt: 1 });
         const trending = await findTrendingPosts();
-        res.json({ posts: allPosts, genres: trending });
+        return res.json({ posts: allPosts, tranding: trending });
     } catch (error) {
         console.log(error.message);
         return res.status(500).json({ message: "Internal Server Error" });

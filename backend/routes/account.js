@@ -67,7 +67,7 @@ router.put("/edit", isLoggedInMiddileware, isOwnerMiddileware, async (req, res) 
         const validate = validateUser(user);
         if (!validate) return res.status(403).json({ message: "Bad request" });
         // check user exists
-        const dbUser = User.findOne({ username: user.username });
+        const dbUser = await User.findOne({ username: user.username });
         if (!dbUser) return res.status(403).json({ message: "Invalid User" })
         // update user
         const { firstName, lastName, password } = user;
@@ -85,16 +85,16 @@ router.put("/edit", isLoggedInMiddileware, isOwnerMiddileware, async (req, res) 
     }
 });
 // get user details by username
-router.get("/:username", isLoggedInMiddileware, async (req, res) => {
+router.get("/user", isLoggedInMiddileware, async (req, res) => {
     try {
-        const { username } = req.params;
-        const dbUser = User.findOne({ username: username });
+        console.log(req.username);
+        const dbUser = await User.findOne({ username: req.username });
         if (!dbUser) return res.status(400).json("User doesnt exist");
-        const dbUserPosts = Post.find({ author: dbUser._id });
+        const dbUserPosts = await Post.find({ author: dbUser._id });
         // return user and filter pass on return
         const user = {
             username: dbUser.username,
-            firstName: dbUser.firstname,
+            firstName: dbUser.firstName,
             lastName: dbUser.lastName,
             createdAt: dbUser.createdAt,
             posts: dbUserPosts
@@ -102,8 +102,8 @@ router.get("/:username", isLoggedInMiddileware, async (req, res) => {
         return res.json({ message: "User Fetched Sucessfully", user: user });
     }
     catch (err) {
-        console.log(err.message || err.stack);
-        return res.status(400).json("Internal Server Error");
+        console.log(err.message);
+        return res.status(400).json("Internal Server Error at edit");
     }
 })
 module.exports = router;

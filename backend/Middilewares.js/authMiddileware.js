@@ -2,11 +2,14 @@ const { JWTSECRET } = require('../config');
 const jwt = require('jsonwebtoken');
 // check if user already logged in via jwt 
 const isLoggedInMiddileware = (req, res, next) => {
-    const token = req.headers.token;
+    const { token } = req.headers;
     try {
+
         const verify = jwt.verify(token, JWTSECRET);
+        //console.log(verify)
         // if verified pass on to next
         if (verify) {
+            console.log(verify);
             req.userId = verify.userId;
             req.username = verify.username;
         }
