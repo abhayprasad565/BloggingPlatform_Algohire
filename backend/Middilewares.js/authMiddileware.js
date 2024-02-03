@@ -1,5 +1,6 @@
 const { JWTSECRET } = require('../config');
 const jwt = require('jsonwebtoken');
+// check if user already logged in via jwt 
 const isLoggedInMiddileware = (req, res, next) => {
     const token = req.headers.token;
     try {
@@ -16,7 +17,7 @@ const isLoggedInMiddileware = (req, res, next) => {
         return res.status(403).json({ message: "User nor logged in" });
     }
 }
-
+// check root user is same as that requesting edit (in case of put routes)
 const isOwnerMiddileware = (req, res, next) => {
     try {
         const userId = req.userId;

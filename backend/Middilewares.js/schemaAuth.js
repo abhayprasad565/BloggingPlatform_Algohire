@@ -3,7 +3,7 @@ const { z } = require('zod');
 const userSchema = z.object({
     firstName: z.string(),
     lastName: z.string(),
-    userName: z.string(),
+    username: z.string(),
     password: z.string(),
 });
 

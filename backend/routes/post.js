@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 // get all posts
-router.get("/posts",)
+
 
 
 

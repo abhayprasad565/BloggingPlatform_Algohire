@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
+const Post = require("./Post");
 
-const userSchema = mongoose.Schema({
+let userSchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: true,
-        immutable: true
     },
     lastName: {
         type: String,
         required: true,
-        immutable: true
+
     },
     username: {
         type: String,
@@ -24,7 +24,13 @@ const userSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now(),
-    }
+    },
+
 });
+// mongoose middileware to delete data when this q is called
+userSchema.post("findOneAndDelete", async (user) => {
+    // delete all posts in the  array
+    if (user) await Post.deleteMany({ author: { $in: user._id } })
+})
 const User = mongoose.model("User", userSchema);
-module.exports = User;
+module.exports = { User };
