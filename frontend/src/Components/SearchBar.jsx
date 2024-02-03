@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const SearchBar = ({ value, placeholder, onChange }) => {
     const navigate = useNavigate();
     const handleSearch = () => {
-        navigate("/feed/" + "?category=" + value);
+        navigate("/feed/" + value);
     }
     return (
         <div className="relative w-full    box-border ">
