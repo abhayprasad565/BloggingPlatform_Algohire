@@ -32,5 +32,22 @@ const loginSchemaValidate = (user) => {
     }
 }
 // post validation
+const postSchema = z.object({
+    author: z.string().optional(),
+    _id: z.string().optional(),
+    category: z.string().optional(),
+    title: z.string(),
+    content: z.string(),
+});
+const validatePost = (post) => {
+    try {
+        postSchema.parse(post);
+        return true;
+    }
+    catch (err) {
+        console.log(err.issues);
+        return false;
+    }
+}
 
-module.exports = { validateUser, loginSchemaValidate }
+module.exports = { validateUser, loginSchemaValidate, validatePost }
